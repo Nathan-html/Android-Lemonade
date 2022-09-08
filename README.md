@@ -12,8 +12,8 @@ Pre-requisites
 --------------
 
 - Complete [Unit 1](https://developer.android.com/courses/android-basics-kotlin/unit-1) of Android Basics in Kotlin
-->My code for the first app : [Dice](https://github.com/Nathan-html/Android-Dice-Roll)
-->My code for the second app : [Lucky-dice](https://github.com/Nathan-html/Android-Lucky-Dice-Roll)
+- My code for the first app : [Dice](https://github.com/Nathan-html/Android-Dice-Roll)
+- My code for the second app : [Lucky-dice](https://github.com/Nathan-html/Android-Lucky-Dice-Roll)
 
 Getting Started
 ---------------
