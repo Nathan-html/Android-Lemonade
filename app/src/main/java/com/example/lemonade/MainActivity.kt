@@ -17,11 +17,17 @@ package com.example.lemonade
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
+
+    // statics
+    companion object {
+        val TAG = "Lemonade"
+    }
 
     /**
      * DO NOT ALTER ANY VARIABLE OR VALUE NAMES OR THEIR INITIAL VALUES.
@@ -65,10 +71,13 @@ class MainActivity : AppCompatActivity() {
 
         lemonImage = findViewById(R.id.image_lemon_state)
         setViewElements()
+        lemonImage!!.setImageResource(R.drawable.lemon_tree)
         lemonImage!!.setOnClickListener {
+            Log.d(TAG, "I'm in setOnClickListener :)")
             // TODO: call the method that handles the state when the image is clicked
         }
         lemonImage!!.setOnLongClickListener {
+            Log.d(TAG, "I'm in setOnLongClickListener :)")
             // TODO: replace 'false' with a call to the function that shows the squeeze count
             false
         }
