@@ -70,36 +70,18 @@ class MainActivity : AppCompatActivity() {
         // === END IF STATEMENT ===
 
         lemonImage = findViewById(R.id.image_lemon_state)
+        val Text : TextView = findViewById(R.id.text_action)
         setViewElements()
         lemonImage!!.setImageResource(R.drawable.lemon_tree)
         lemonImage!!.setOnClickListener {
             Log.d(TAG, "I'm in setOnClickListener :)")
             Log.d(TAG, lemonadeState)
-            if (lemonadeState == "select") {
-                lemonadeState = "squeeze"
-                lemonSize = LemonTree().pick();
-                lemonImage!!.setImageResource(R.drawable.lemon_squeeze)
-            } else if (lemonadeState == "squeeze") {
-                if (squeezeCount >= lemonSize) {
-                    lemonadeState = "drink"
-                    lemonImage!!.setImageResource(R.drawable.lemon_drink)
-                } else {
-                    squeezeCount++
-                }
-            } else if (lemonadeState == "drink") {
-                lemonadeState = "retry"
-                lemonImage!!.setImageResource(R.drawable.lemon_restart)
-            } else if (lemonadeState == "retry") {
-                lemonadeState = "select"
-                lemonImage!!.setImageResource(R.drawable.lemon_tree)
-                lemonSize = -1
-                squeezeCount = -1
-            }
+            clickLemonImage()
+            setViewElements()
         }
         lemonImage!!.setOnLongClickListener {
             Log.d(TAG, "I'm in setOnLongClickListener :)")
-            // TODO: replace 'false' with a call to the function that shows the squeeze count
-            false
+            showSnackbar();
         }
     }
 
@@ -120,26 +102,29 @@ class MainActivity : AppCompatActivity() {
      * This method determines the state and proceeds with the correct action.
      */
     private fun clickLemonImage() {
-        // TODO: use a conditional statement like 'if' or 'when' to track the lemonadeState
-        //  when the image is clicked we may need to change state to the next step in the
-        //  lemonade making progression (or at least make some changes to the current state in the
-        //  case of squeezing the lemon). That should be done in this conditional statement
-
-        // TODO: When the image is clicked in the SELECT state, the state should become SQUEEZE
-        //  - The lemonSize variable needs to be set using the 'pick()' method in the LemonTree class
-        //  - The squeezeCount should be 0 since we haven't squeezed any lemons just yet.
-
-        // TODO: When the image is clicked in the SQUEEZE state the squeezeCount needs to be
-        //  INCREASED by 1 and lemonSize needs to be DECREASED by 1.
-        //  - If the lemonSize has reached 0, it has been juiced and the state should become DRINK
-        //  - Additionally, lemonSize is no longer relevant and should be set to -1
-
-        // TODO: When the image is clicked in the DRINK state the state should become RESTART
-
-        // TODO: When the image is clicked in the RESTART state the state should become SELECT
-
-        // TODO: lastly, before the function terminates we need to set the view elements so that the
-        //  UI can reflect the correct state
+        if (lemonadeState == "select") {
+            lemonadeState = "squeeze"
+            lemonSize = LemonTree().pick();
+            lemonImage!!.setImageResource(R.drawable.lemon_squeeze)
+            squeezeCount++
+        } else if (lemonadeState == "squeeze") {
+            if (squeezeCount >= lemonSize) {
+                lemonadeState = "drink"
+                lemonImage!!.setImageResource(R.drawable.lemon_drink)
+            } else {
+                squeezeCount++
+            }
+        } else if (lemonadeState == "drink") {
+            lemonadeState = "restart"
+            lemonImage!!.setImageResource(R.drawable.lemon_restart)
+        } else if (lemonadeState == "restart") {
+            lemonadeState = "select"
+            lemonImage!!.setImageResource(R.drawable.lemon_tree)
+            lemonSize = -1
+            squeezeCount = -1
+        } else {
+            Log.d(TAG, "Error lemonadeState was not recognized")
+        }
     }
 
     /**
@@ -147,14 +132,17 @@ class MainActivity : AppCompatActivity() {
      */
     private fun setViewElements() {
         val textAction: TextView = findViewById(R.id.text_action)
-        // TODO: set up a conditional that tracks the lemonadeState
-
-        // TODO: for each state, the textAction TextView should be set to the corresponding string from
-        //  the string resources file. The strings are named to match the state
-
-        // TODO: Additionally, for each state, the lemonImage should be set to the corresponding
-        //  drawable from the drawable resources. The drawables have the same names as the strings
-        //  but remember that they are drawables, not strings.
+        if (lemonadeState == "select") {
+            textAction.text = getString(R.string.lemon_select)
+        } else if (lemonadeState == "squeeze") {
+            textAction.text = getString(R.string.lemon_squeeze)
+        } else if (lemonadeState == "drink") {
+            textAction.text = getString(R.string.lemon_drink)
+        } else if (lemonadeState == "restart") {
+            textAction.text = getString(R.string.lemon_empty_glass)
+        } else {
+            Log.d(TAG, "Error lemonadeState was not recognized")
+        }
     }
 
     /**
