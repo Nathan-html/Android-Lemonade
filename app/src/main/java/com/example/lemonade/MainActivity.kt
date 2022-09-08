@@ -74,7 +74,27 @@ class MainActivity : AppCompatActivity() {
         lemonImage!!.setImageResource(R.drawable.lemon_tree)
         lemonImage!!.setOnClickListener {
             Log.d(TAG, "I'm in setOnClickListener :)")
-            // TODO: call the method that handles the state when the image is clicked
+            Log.d(TAG, lemonadeState)
+            if (lemonadeState == "select") {
+                lemonadeState = "squeeze"
+                lemonSize = LemonTree().pick();
+                lemonImage!!.setImageResource(R.drawable.lemon_squeeze)
+            } else if (lemonadeState == "squeeze") {
+                if (squeezeCount >= lemonSize) {
+                    lemonadeState = "drink"
+                    lemonImage!!.setImageResource(R.drawable.lemon_drink)
+                } else {
+                    squeezeCount++
+                }
+            } else if (lemonadeState == "drink") {
+                lemonadeState = "retry"
+                lemonImage!!.setImageResource(R.drawable.lemon_restart)
+            } else if (lemonadeState == "retry") {
+                lemonadeState = "select"
+                lemonImage!!.setImageResource(R.drawable.lemon_tree)
+                lemonSize = -1
+                squeezeCount = -1
+            }
         }
         lemonImage!!.setOnLongClickListener {
             Log.d(TAG, "I'm in setOnLongClickListener :)")
